@@ -11,7 +11,7 @@
 * **[MainWindow.xaml](./CS/MainWindow.xaml) (VB: [MainWindow.xaml](./VB/MainWindow.xaml))**
 * [MainWindow.xaml.cs](./CS/MainWindow.xaml.cs) (VB: [MainWindow.xaml.vb](./VB/MainWindow.xaml.vb))
 <!-- default file list end -->
-# How to: Show Object Properties
+# WPF Property Grid - Display object properties
 
 
 <p>The PropertyGridControl is the control designed to edit object properties. It can be bound to a specific object as well as a collection of objects.</p><br><p>To browse and manage properties of a specific object, set the  <a href="https://documentation.devexpress.com/#WPF/DevExpressXpfPropertyGridPropertyGridControl_SelectedObjecttopic">PropertyGridControl.SelectedObject</a> property to this object.</p>
