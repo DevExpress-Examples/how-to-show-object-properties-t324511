@@ -4,62 +4,93 @@
 [![](https://img.shields.io/badge/📖_How_to_use_DevExpress_Examples-e9f6fc?style=flat-square)](https://docs.devexpress.com/GeneralInformation/403183)
 [![](https://img.shields.io/badge/💬_Leave_Feedback-feecdd?style=flat-square)](#does-this-example-address-your-development-requirementsobjectives)
 <!-- default badges end -->
-<!-- default file list -->
-*Files to look at*:
 
-* [Data.cs](./CS/Data.cs) (VB: [Data.vb](./VB/Data.vb))
-* **[MainWindow.xaml](./CS/MainWindow.xaml) (VB: [MainWindow.xaml](./VB/MainWindow.xaml))**
+# WPF Property Grid - Display Object Properties
+
+In this example, a user selects a contact, and the [`PropertyGridControl`](https://docs.devexpress.com/WPF/DevExpress.Xpf.PropertyGrid.PropertyGridControl) displays its properties. The user can modify these properties directly in the panel.
+
+![Display Object Properties](./Images/property-grid.jpg)
+
+## Implementation Details
+
+### Define Data Source
+
+The view model exposes a list of contacts. Each contact includes the following fields: `FirstName`, `LastName`, `Email`, `Phone`, `Address`, `City`, `State`, and `Zip`.
+
+```csharp
+public class ViewModel {
+    public List<Contact> Items { get; set; }
+    public ViewModel() {
+        Items = new List<Contact> {
+            new Contact() {
+                FirstName = "Carolyn",
+                LastName = "Baker",
+                Email = "carolyn.baker@example.com", 
+                Phone = "(555)349-3010",
+                Address = "1198 Theresa Cir", 
+                City = "Whitinsville", 
+                State = "MA", 
+                Zip = "01582"
+            }, ...
+        };
+    }
+}
+```
+
+### Create Editable Object
+
+The `Contact` class defines fields that appear in the `PropertyGridControl`. This class supports property change notifications, so all updates in the UI are immediately applied to the data object:
+
+```csharp
+public class Contact : BindableBase {
+    string _FirstName;
+    public string FirstName {
+        get { return _FirstName; }
+        set {
+            _FirstName = value;
+            RaisePropertyChanged(() => FirstName);
+        }
+    }
+    ...
+}
+```
+
+### Connect UI
+
+Bind the `PropertyGridControl` to the focused or selected row in the `GridControl`:
+
+```csharp
+<dxg:GridControl ItemsSource="{Binding Items}" Name="grid">
+    <dxg:GridControl.Columns>
+        <dxg:GridColumn FieldName="FirstName" />
+        <dxg:GridColumn FieldName="LastName" />
+    </dxg:GridControl.Columns>
+</dxg:GridControl>
+
+<dxprg:PropertyGridControl SelectedObject="{Binding ElementName=grid, Path=CurrentItem}" />
+<dxprg:PropertyGridControl SelectedObjects="{Binding ElementName=grid, Path=SelectedItems}" />
+```
+
+When the user selects a contact, the PropertyGridControl displays its properties and allows in-place editing.
+
+## Files to Review
+
+* [MainWindow.xaml](./CS/MainWindow.xaml) (VB: [MainWindow.xaml](./VB/MainWindow.xaml))
 * [MainWindow.xaml.cs](./CS/MainWindow.xaml.cs) (VB: [MainWindow.xaml.vb](./VB/MainWindow.xaml.vb))
-<!-- default file list end -->
-# WPF Property Grid - Display object properties
+* [Data.cs](./CS/Data.cs) (VB: [Data.vb](./VB/Data.vb))
 
+## Documentation
 
-<p>The PropertyGridControl is the control designed to edit object properties. It can be bound to a specific object as well as a collection of objects.</p><br><p>To browse and manage properties of a specific object, set the  <a href="https://documentation.devexpress.com/#WPF/DevExpressXpfPropertyGridPropertyGridControl_SelectedObjecttopic">PropertyGridControl.SelectedObject</a> property to this object.</p>
+* [GridControl](https://docs.devexpress.com/WPF/DevExpress.Xpf.Grid.GridControl)
+* [PropertyGridControl](https://docs.devexpress.com/WPF/DevExpress.Xpf.PropertyGrid.PropertyGridControl)
+* [PropertyGridControl.SelectedObject](https://documentation.devexpress.com/#WPF/DevExpressXpfPropertyGridPropertyGridControl_SelectedObjecttopic)
+* [DXTabControl](https://docs.devexpress.com/WPF/7975/controls-and-libraries/layout-management/tab-control/fundamentals/dxtabcontrol)
 
-```cs
-public partial class MainWindow {
-    public MainWindow() {
-        DataContext = new Contact("Carolyn", "Baker");
-        InitializeComponent();
-    }
-}
-public class Contact {
-    public string FirstName { get; set; }
-    public string LastName { get; set; }
-    public Contact(string firstName, string lastName) {
-        FirstName = firstName;
-        LastName = lastName;
-    }
-}
-```
+## More Examples
 
-
-
-```xaml
-<dxprg:PropertyGridControl SelectedObject="{Binding Path=.}"/>
-```
-
-<br><p>To edit properties of multiple objects simultaneously, use <a href="https://documentation.devexpress.com/#WPF/DevExpressXpfPropertyGridPropertyGridControl_SelectedObjectstopic">PropertyGridControl.SelectedObjects</a>.</p>
-
-```cs
-public partial class MainWindow {
-    public MainWindow() {
-        DataContext = new List<Contact> { new Contact("Carolyn", "Baker"), new Contact("Amber", "Seaman") };
-        InitializeComponent();
-    }
-}
-```
-
-
-
-```xaml
-<dxprg:PropertyGridControl SelectedObjects="{Binding Path=.}" ExpandCategoriesWhenSelectedObjectChanged="True"/>
-```
-
-<br>
-
-<br/>
-
+* [WPF Data Grid – Bind to Dynamic Data](https://github.com/DevExpress-Examples/wpf-bind-gridcontrol-to-dynamic-data)
+* [WPF Data Grid – Handle Drag and Drop Operations](https://github.com/DevExpress-Examples/wpf-grid-handle-drag-and-drop)
+* [WPF Data Grid – Specify Custom Content for Column Chooser Headers](https://github.com/DevExpress-Examples/wpf-data-grid-custom-content-for-column-chooser-headers)
 
 <!-- feedback -->
 ## Does this example address your development requirements/objectives?
