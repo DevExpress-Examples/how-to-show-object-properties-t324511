@@ -71,7 +71,7 @@ Bind the `PropertyGridControl` to the focused or selected row in the `GridContro
 <dxprg:PropertyGridControl SelectedObjects="{Binding ElementName=grid, Path=SelectedItems}" />
 ```
 
-When the user selects a contact, the PropertyGridControl displays its properties and allows in-place editing.
+When the user selects a contact, the `PropertyGridControl` displays its properties and allows in-place editing.
 
 ## Files to Review
 
