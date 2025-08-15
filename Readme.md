@@ -5,17 +5,35 @@
 [![](https://img.shields.io/badge/💬_Leave_Feedback-feecdd?style=flat-square)](#does-this-example-address-your-development-requirementsobjectives)
 <!-- default badges end -->
 
-# WPF Property Grid - Display Object Properties
+# WPF Property Grid - Inspect and Edit Object Properties
 
-In this example, a user selects a contact, and the [`PropertyGridControl`](https://docs.devexpress.com/WPF/DevExpress.Xpf.PropertyGrid.PropertyGridControl) displays its properties. The user can modify these properties directly in the panel.
+This example uses the WPF [`PropertyGridControl`](https://docs.devexpress.com/WPF/DevExpress.Xpf.PropertyGrid.PropertyGridControl) to inspect and modify properties of data objects displayed in the [`GridControl`](https://docs.devexpress.com/WPF/DevExpress.Xpf.Grid.GridControl) control. Use the `PropertyGridControl` to create object inspectors inspired by the `Properties` window in the Visual Studio IDE.
 
 ![Display Object Properties](./Images/property-grid.jpg)
 
 ## Implementation Details
 
-### Define Data Source
+### Source Object
 
-The view model exposes a list of contacts. Each contact includes the following fields: `FirstName`, `LastName`, `Email`, `Phone`, `Address`, `City`, `State`, and `Zip`.
+The `Contact` class declares public bindable properties. The `PropertyGridControl` inspects the object's public properties and allows users to browse and modify them. The `Contact` class implements property change notifications. Updates made in the `PropertyGridControl` are applied immediately to the source object and reflected in the `GridControl`. 
+
+```csharp
+public class Contact : BindableBase {
+    string _FirstName;
+    public string FirstName {
+        get { return _FirstName; }
+        set {
+            _FirstName = value;
+            RaisePropertyChanged(() => FirstName);
+        }
+    }
+    // ...
+}
+```
+
+### Data Source
+
+The `ViewModel` exposes a typed collection of contacts.
 
 ```csharp
 public class ViewModel {
@@ -31,44 +49,29 @@ public class ViewModel {
                 City = "Whitinsville", 
                 State = "MA", 
                 Zip = "01582"
-            }, ...
+            }, 
+            // ...
         };
     }
 }
 ```
 
-### Create Editable Object
+### Property Grid Configuration
 
-The `Contact` class defines fields that appear in the `PropertyGridControl`. This class supports property change notifications, so all updates in the UI are immediately applied to the data object:
+This example creates two Property Grid controls and displays them in tab containers. The first Property Grid control inspects the `Contact` object that corresponds to the focused item in the `GridControl`. The second Property Grid control inspects `Contact` objects that correspond to selected items in the `GridControl`:
 
-```csharp
-public class Contact : BindableBase {
-    string _FirstName;
-    public string FirstName {
-        get { return _FirstName; }
-        set {
-            _FirstName = value;
-            RaisePropertyChanged(() => FirstName);
-        }
-    }
+```xaml
+<dx:DXTabControl>
+    <dx:DXTabItem Header="Edit properties of the focused row">
+        <dxprg:PropertyGridControl SelectedObject="{Binding Path=CurrentItem, ElementName=grid}" ShowCategories="False"/>
+    </dx:DXTabItem>
+    <dx:DXTabItem Header="Edit properties of selected rows">
+        <dxprg:PropertyGridControl SelectedObjects="{Binding Path=SelectedItems, ElementName=grid}" ShowCategories="False"/>
+    </dx:DXTabItem>    
+    
     ...
-}
-```
 
-### Connect UI
-
-Bind the `PropertyGridControl` to the focused or selected row in the `GridControl`:
-
-```csharp
-<dxg:GridControl ItemsSource="{Binding Items}" Name="grid">
-    <dxg:GridControl.Columns>
-        <dxg:GridColumn FieldName="FirstName" />
-        <dxg:GridColumn FieldName="LastName" />
-    </dxg:GridControl.Columns>
-</dxg:GridControl>
-
-<dxprg:PropertyGridControl SelectedObject="{Binding ElementName=grid, Path=CurrentItem}" />
-<dxprg:PropertyGridControl SelectedObjects="{Binding ElementName=grid, Path=SelectedItems}" />
+</dx:DXTabControl>
 ```
 
 When the user selects a contact, the `PropertyGridControl` displays its properties and allows in-place editing.
