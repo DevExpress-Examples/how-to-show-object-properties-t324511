@@ -7,7 +7,7 @@
 
 # WPF Property Grid - Inspect and Edit Object Properties
 
-This example uses the WPF [`PropertyGridControl`](https://docs.devexpress.com/WPF/DevExpress.Xpf.PropertyGrid.PropertyGridControl) to inspect and modify properties of data objects displayed in the [`GridControl`](https://docs.devexpress.com/WPF/DevExpress.Xpf.Grid.GridControl) control. Use the `PropertyGridControl` to create object inspectors inspired by the `Properties` window in the Visual Studio IDE.
+This example uses the WPF [`PropertyGridControl`](https://docs.devexpress.com/WPF/DevExpress.Xpf.PropertyGrid.PropertyGridControl) to inspect and modify properties of data objects displayed in the [`GridControl`](https://docs.devexpress.com/WPF/DevExpress.Xpf.Grid.GridControl). Use the `PropertyGridControl` to create object inspectors inspired by the `Properties` window in the Visual Studio IDE.
 
 ![Display Object Properties](./Images/property-grid.jpg)
 
