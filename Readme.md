@@ -74,7 +74,7 @@ This example creates two Property Grid controls and displays them in tab contain
 </dx:DXTabControl>
 ```
 
-When the user selects a contact, the `PropertyGridControl` displays its properties and allows in-place editing.
+When a user selects a contact, the PropertyGridControl displays its properties. The user can edit each property value directly in the grid.
 
 ## Files to Review
 
@@ -96,6 +96,7 @@ When the user selects a contact, the `PropertyGridControl` displays its properti
 * [WPF Data Grid – Specify Custom Content for Column Chooser Headers](https://github.com/DevExpress-Examples/wpf-data-grid-custom-content-for-column-chooser-headers)
 
 <!-- feedback -->
+
 ## Does this example address your development requirements/objectives?
 
 [<img src="https://www.devexpress.com/support/examples/i/yes-button.svg"/>](https://www.devexpress.com/support/examples/survey.xml?utm_source=github&utm_campaign=wpf-property-grid-display-object-properties&~~~was_helpful=yes) [<img src="https://www.devexpress.com/support/examples/i/no-button.svg"/>](https://www.devexpress.com/support/examples/survey.xml?utm_source=github&utm_campaign=wpf-property-grid-display-object-properties&~~~was_helpful=no)
